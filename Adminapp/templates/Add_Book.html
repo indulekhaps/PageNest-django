@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Book</title>
+</head>
+<body>
+<form class="forms-sample" action="{% url 'save_book' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="book_title">Book Title</label>
+        <input type="text" name="book_title" class="form-control" id="book_title" placeholder="Enter Book Title">
+    </div>
+
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text" name="author" class="form-control" id="author" placeholder="Enter Author Name">
+    </div>
+
+    <div class="form-group">
+  <label for="exampleSelectCategory">Select Category</label>
+  <select class="form-control" id="exampleSelectCategory" name="category">
+    <option selected>Select your book category</option>
+    {% for i in categories %}
+      <option>{{ i.Category_name}}</option>
+    {% endfor %}
+  </select>
+</div>
+
+
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="text" name="price" class="form-control" id="price" placeholder="Enter Price">
+    </div>
+
+    <div class="form-group">
+        <label for="publisher">Publisher</label>
+        <input type="text" name="publisher" class="form-control" id="publisher" placeholder="Enter Publisher Name">
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" name="description" id="description" rows="4" placeholder="Enter Description"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="cover_image">Cover Image</label>
+        <input type="file" class="form-control" id="cover_image" name="cover_image">
+    </div>
+
+    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+    <button class="btn btn-light">Cancel</button>
+</form>
+</body>
+</html>
+{% endblock %}
