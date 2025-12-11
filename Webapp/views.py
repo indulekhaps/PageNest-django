@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from Adminapp.models import Category,Bookdb
-from Webapp.models import contactdb,Registerdb
+from Webapp.models import contactdb, Registerdb, Cartdb
+from django.contrib import messages
 
 
 # Create your views here.
@@ -48,6 +49,22 @@ def checkout(request):
 
 def cart(request):
     return render(request,"Cart.html")
+
+def save_cart(request):
+    if request.method=="POST":
+        c_name=request.POST.get('username')
+        c_book=request.POST.get('Book_name')
+        c_quantity=int(request.POST.get('quantity'))
+        c_price=int(request.POST.get('price1'))
+        c_totalp=int(request.POST.get('total_price'))
+        book= Bookdb.objects.filter(Book_name=c_book).first()
+        img=book.Cover_pic if book else None
+        obj=Cartdb(Username=c_name, Book_name=c_book,Quantity=c_quantity,Price=c_price,Total_price= c_totalp,Book_img=img)
+        obj.save()
+        return redirect(home)
+
+
+
 def filtered_books(request, book_category):
     categories = Category.objects.all()
     books = Bookdb.objects.filter(Category_name=book_category)
@@ -74,6 +91,8 @@ def save_sign_up(request):
         pwd=request.POST.get('pass')
         cpwd=request.POST.get('re_pass')
         obj=Registerdb(Username=name,Password=pwd,Email=email,Conf_password=cpwd)
+        if Registerdb.objects.filter(Username=name).exists():
+            messages.warning(request,)
         obj.save()
         return redirect(sign_up)
 

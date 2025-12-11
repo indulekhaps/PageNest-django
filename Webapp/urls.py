@@ -11,6 +11,7 @@ urlpatterns=[
     path('Popular_Books/', views.popular_books, name="popular_books"),
     path('Checkout/', views.checkout, name="checkout"),
     path('Cart/', views.cart, name="cart"),
+    path('Save_Cart/', views.save_cart, name="save_cart"),
     path('Filtered_Books/<str:book_category>/', views.filtered_books, name='filtered_books'),
     path('Single_Book/<int:booksingle_id>/', views.single_book, name='single_book'),
     path('Sign_in/', views.sign_in, name="sign_in"),

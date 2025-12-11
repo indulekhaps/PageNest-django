@@ -5,6 +5,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -23,6 +24,7 @@ def save_category(request):
         c_img=request.FILES['cover_image']
         obj=Category(Category_name=c_name,Description=c_desc,Cover_img=c_img)
         obj.save()
+        messages.success(request,"Category saved Successfully..!")
         return redirect(add_category)
 def display_category(request):
     data=Category.objects.all()
@@ -115,7 +117,7 @@ def admin_login(request):
                 request.session['password']=pwd
                 return redirect(index)
             else:
-                return redirect(admin_login_page)
+                return redirect(index)
         else:
             return redirect(admin_login_page)
 
